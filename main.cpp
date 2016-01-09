@@ -21,7 +21,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-    cout << "Hello world!" << endl;
+    cout << "TOP KEK 2016" << endl;
     
     function();
     
