@@ -7,6 +7,8 @@
 
 using namespace std;
 
+typedef double num;
+
 void function(){
     cout << "This is in funciton()!" << endl;
     cout << "I added this line!" << endl;

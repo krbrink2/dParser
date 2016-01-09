@@ -11,10 +11,35 @@
 
 #include <cstdlib>
 #include <iostream>
+//#include <string>
 
 #include "dmath.h"
 
 using namespace std;
+
+class Node{
+public:
+// public attributes can be seen by anyone
+    
+    // returns expression assigned to this node
+    string getExpression(){
+        return expression;
+    }
+    
+    // returns value represented by this expression
+    // This is a pure virtual function: it must be defined by a child.
+    num evaluate() = 0;
+    
+protected:    
+// protected attributes can only be seen by their owner and its children
+    string expression;    
+    
+private:
+// private attributes can only be seen by their owner
+    
+};
+
+
 
 /*
  * 
