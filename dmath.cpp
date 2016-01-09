@@ -8,6 +8,6 @@
 using namespace std;
 
 void function(){
-    cout << "This is in funciton()!" << endl;
+    cout << "This is in function()!" << endl;
     cout << "I added this line!" << endl;
 }
