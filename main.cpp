@@ -22,6 +22,10 @@ using namespace std;
 int main(int argc, char** argv) {
 
     cout << "TOP KEK 2016" << endl;
+    int num_men_at_arms = 5;
+    for(int i = 0; i < num_men_at_arms; i++){
+        cout << "No, mi'lord!" << endl;
+    }
     
     function();
     
