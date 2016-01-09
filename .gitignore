@@ -1,0 +1,9 @@
+# Ignore all files
+*
+
+# ...except these
+!.gitignore
+!main.cpp
+!dmath.h
+!dmath.cpp
+
