@@ -14,6 +14,8 @@
 #ifndef DMATH_H
 #define DMATH_H
 
+typedef double num;
+
 void function();
 
 
