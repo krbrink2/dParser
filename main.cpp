@@ -154,6 +154,10 @@ int main(int argc, char** argv) {
     return 0;
 }
 
+void Node::freeChildren(){
+    delete[] children;
+}
+
 /* Constructor for LiteralNode. Defines expression. Both children are null since
     a Literal will never have any children.*/
 LiteralNode::LiteralNode(string exp)
