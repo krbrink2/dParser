@@ -154,11 +154,13 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-/* Constructor for LiteralNode
- */
+/* Constructor for LiteralNode. Defines expression. Both children are null since
+    a Literal will never have any children.*/
 LiteralNode::LiteralNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*Returns expression represented as a num type*/
