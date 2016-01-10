@@ -119,8 +119,8 @@ Node * root;
 num parse(Node * &ptr, string expression){
     //@TODO; implement
     /*Assuming input belongs to a LiteralNode (FIX LATER):*/
-    LiteralNode nextNode = new LiteralNode(expression);
-    ptr = &nextNode;
+    LiteralNode* nextNode = new LiteralNode(expression);
+    ptr = nextNode;
     return ptr->evaluate();
 }
 
