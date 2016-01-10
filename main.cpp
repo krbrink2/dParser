@@ -57,12 +57,23 @@ class LiteralNode : public Node
         LiteralNode(string exp);
         /*getNum returns the num stored in this literal.*/
         num getValue();
+        // Inherited from parent class
+        num evaluate();
     private:
         /*value contains the num that should be represented by expression.
             May not be necessary since evaluate() should return value anyway.*/
         num value;
 };
 
+/* Given a node pointer and an expression, parse() determines the next
+ * operation to be performed and the substring(s) to perform it on. Allocates
+ * a new derived node and sets ptr to point to it, then calls parse on any child
+ * pointers with their expression strings.
+ */
+num parse(Node * &ptr, string expression){
+    //@TODO; implement
+    return -1;
+}
 
 
 /*
@@ -81,8 +92,14 @@ int main(int argc, char** argv) {
     return 0;
 }
 
+/* Constructor for LiteralNode
+ */
 LiteralNode::LiteralNode(string exp)
 {
     expression = exp;
 }
 
+/*Returns expression represented as a num type*/
+num LiteralNode::evaluate(){
+    //@TODO: write
+}
