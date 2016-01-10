@@ -18,7 +18,8 @@
 using namespace std;
 
 // Represents a node on the expression tree.
-// Because node has a pure virtual function, it is an abstract class, and thus cannot have any instances. Only its children can be instantiated.
+// Because node has a pure virtual function, it is an abstract class, and thus 
+// cannot have any instances. Only its children can be instantiated.
 class Node{
 public:
 // public attributes can be seen by anyone
@@ -33,11 +34,14 @@ public:
     virtual num evaluate() = 0;
     
     // Idea:
-    // We may want to add a function that returns an array of pointers to children nodes, so we can easily navigate the tree for cleanup.
+    // We may want to add a function that returns an array of pointers to 
+    // children nodes, so we can easily navigate the tree for cleanup.
+    virtual Node* getChildren() = 0;
     
 protected:    
 // protected attributes can only be seen by their owner and its children
     string expression;    
+    Node* children[2]; 
     
 private:
 // private attributes can only be seen by their owner
