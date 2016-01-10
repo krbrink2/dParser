@@ -37,10 +37,8 @@ public:
     // This is a pure virtual function: it must be defined by a child.
     virtual num evaluate() = 0;
     
-    // Idea:
-    // We may want to add a function that returns an array of pointers to 
-    // children nodes, so we can easily navigate the tree for cleanup.
-    virtual Node* getChildren() = 0;
+    // Returns pointer to member array children. Will be double pointer.
+    Node ** getChildren();
     
     // frees children pointers
     void freeChildren();
@@ -132,9 +130,17 @@ num parse(Node * &ptr, string expression){
  * Given a pointer to a node, frees that subtree.
  */
 void cleanup(Node * ptr){
-    // free children nodes
-    //delete[] ptr->
-    //@RESUME
+    // Given NULL?
+    if(!ptr){
+        return;
+    }
+    // recursively cleanup children
+    Node ** children = ptr->getChildren();
+    cleanup(children[0]);
+    cleanup(children[1]);
+    // Actually free children nodes
+    ptr->freeChildren();
+    
     return;
 }
 
@@ -151,8 +157,17 @@ int main(int argc, char** argv) {
     return 0;
 }
 
+/*getChildren()
+ * Returns pointer to array of children pointers.
+ */
+Node ** Node::getChildren(){
+   return children; 
+}
+
+// ONLY deletes children of this node. NOT recursive.
 void Node::freeChildren(){
-    delete[] &children;
+    delete children[0];
+    delete children[1];
 }
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since
