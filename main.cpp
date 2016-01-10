@@ -55,7 +55,12 @@ class LiteralNode : public Node
     public:
         /*LiteralNode constructor: stores expression.*/
         LiteralNode(string exp);
+        /*getNum returns the num stored in this literal.*/
+        num getValue();
     private:
+        /*value contains the num that should be represented by expression.
+            May not be necessary since evaluate() should return value anyway.*/
+        num value;
 };
 
 
