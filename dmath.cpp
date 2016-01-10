@@ -16,5 +16,5 @@ void function(){
 
 num stringToNum(string s)
 {    
-    return stod(s, NULL);
+    return stod(s);
 }
