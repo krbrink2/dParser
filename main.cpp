@@ -42,6 +42,9 @@ public:
     // children nodes, so we can easily navigate the tree for cleanup.
     virtual Node* getChildren() = 0;
     
+    // frees children pointers
+    void freeChildren();
+    
 protected:    
 // protected attributes can only be seen by their owner and its children
     // string representing the mathematical expression for this node
@@ -125,6 +128,16 @@ num parse(Node * &ptr, string expression){
     return -1;
 }
 
+/* cleanup
+ * Given a pointer to a node, frees that subtree.
+ */
+void cleanup(Node * ptr){
+    // free children nodes
+    //delete[] ptr->
+    //@RESUME
+    return;
+}
+
 /* main method
  * 
  */
@@ -141,6 +154,10 @@ int main(int argc, char** argv) {
     cout << stringToNum(strang);
     
     return 0;
+}
+
+void Node::freeChildren(){
+    delete[] children;
 }
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since

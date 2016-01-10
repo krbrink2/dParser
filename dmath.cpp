@@ -17,5 +17,9 @@ void function(){
 
 num stringToNum(string s)
 {    
+<<<<<<< HEAD
     return strtod(s.c_str(), NULL);
+=======
+    return stod(s);
+>>>>>>> 9538c18ba812e53f9abe0e055a277c4f5a059dac
 }
