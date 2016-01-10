@@ -152,8 +152,7 @@ int main(int argc, char** argv) {
 }
 
 void Node::freeChildren(){
-    //delete[] children;
-    //@TODO: FIX
+    delete[] &children;
 }
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since
