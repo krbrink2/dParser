@@ -11,7 +11,7 @@
 
 #include <cstdlib>
 #include <iostream>
-//#include <string>
+#include <string>
 
 #include "dmath.h"
 
@@ -137,6 +137,8 @@ int main(int argc, char** argv) {
     }
     
     function();
+    string strang = "2.2221111";
+    cout << stringToNum(strang);
     
     return 0;
 }

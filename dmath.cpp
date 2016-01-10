@@ -5,6 +5,7 @@
  */
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "dmath.h"
 
 using namespace std;
@@ -16,5 +17,5 @@ void function(){
 
 num stringToNum(string s)
 {    
-    return stod(s, NULL);
+    return strtod(s.c_str(), NULL);
 }
