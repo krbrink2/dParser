@@ -143,6 +143,7 @@ void cleanup(Node * ptr){
     return;
 }
 
+
 /* main method
  * 
  */
@@ -152,6 +153,9 @@ int main(int argc, char** argv) {
     function();
     string strang = "2.2221111";
     cout << stringToNum(strang);
+    
+    LiteralNode* testNode = new LiteralNode("2.12345");
+    cout << endl << parse(root, testNode->getExpression());
     
     return 0;
 }
