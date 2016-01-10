@@ -50,6 +50,14 @@ private:
     
 };
 
+class LiteralNode : public Node
+{
+    public:
+        /*LiteralNode constructor: stores expression.*/
+        LiteralNode(string exp);
+    private:
+};
+
 
 
 /*
@@ -66,5 +74,10 @@ int main(int argc, char** argv) {
     function();
     
     return 0;
+}
+
+LiteralNode::LiteralNode(string exp)
+{
+    expression = exp;
 }
 
