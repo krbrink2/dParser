@@ -142,12 +142,7 @@ void cleanup(Node * ptr){
  * 
  */
 int main(int argc, char** argv) {
-
-    cout << "TOP KEK 2016" << endl;
-    int num_men_at_arms = 5;
-    for(int i = 0; i < num_men_at_arms; i++){
-        cout << "No, mi'lord!" << endl;
-    }
+    cout << "You have entered main()" << endl;
     
     function();
     string strang = "2.2221111";
@@ -157,7 +152,8 @@ int main(int argc, char** argv) {
 }
 
 void Node::freeChildren(){
-    delete[] children;
+    //delete[] children;
+    //@TODO: FIX
 }
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since

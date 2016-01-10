@@ -14,9 +14,16 @@
 #ifndef DMATH_H
 #define DMATH_H
 
+#include <string>
+#include <cstdlib>
+
+using namespace std;
+
 typedef double num;
 
 void function();
+
+num stringToNum(string s);
 
 
 #endif /* DMATH_H */
