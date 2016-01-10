@@ -62,14 +62,9 @@ class LiteralNode : public Node
     public:
         /*LiteralNode constructor: stores expression.*/
         LiteralNode(string exp);
-        /*getNum returns the num stored in this literal.*/
-        num getValue();
         // Inherited from parent class
         num evaluate();
     private:
-        /*value contains the num that should be represented by expression.
-            May not be necessary since evaluate() should return value anyway.*/
-        num value;
 };
 
 class ParenNode : public Node{
@@ -125,7 +120,10 @@ Node * root;
  */
 num parse(Node * &ptr, string expression){
     //@TODO; implement
-    return -1;
+    /*Assuming input belongs to a LiteralNode (FIX LATER):*/
+    LiteralNode nextNode = new LiteralNode(expression);
+    ptr = &nextNode;
+    return ptr->evaluate();
 }
 
 /* cleanup
@@ -166,6 +164,7 @@ LiteralNode::LiteralNode(string exp)
 }
 
 /*Returns expression represented as a num type*/
-num LiteralNode::evaluate(){
-    //@TODO: write
+num LiteralNode::evaluate()
+{
+    return stringToNum(expression);
 }
