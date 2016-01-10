@@ -17,6 +17,10 @@
 
 using namespace std;
 
+/* ================
+ * Globals and class declarations
+ * ================ */
+
 // Represents a node on the expression tree.
 // Because node has a pure virtual function, it is an abstract class, and thus 
 // cannot have any instances. Only its children can be instantiated.
@@ -65,6 +69,50 @@ class LiteralNode : public Node
         num value;
 };
 
+class ParenNode : public Node{
+public:
+    // constructor
+    ParenNode(string exp);
+    // inherited from parent class
+    num evaluate();
+};
+
+class AddNode : public Node{
+public:
+    // constructor
+    AddNode(string exp);
+    // inherited from parent class
+    num evaluate();
+};
+
+class SubtractNode : public Node{
+public:
+    // constructor
+    SubtractNode(string exp);
+    // inherited from parent class
+    num evaluate();
+};
+
+class MultiplyNode : public Node{
+public:
+    // constructor
+    MultiplyNode(string exp);
+    // inherited from parent class
+    num evaluate();
+};
+
+class DivideNode : public Node{
+public:
+    // constructor
+    DivideNode(string exp);
+    // inherited from parent class
+    num evaluate();
+};
+
+/* ================
+ * Function definitions
+ * ================ */
+
 /* Given a node pointer and an expression, parse() determines the next
  * operation to be performed and the substring(s) to perform it on. Allocates
  * a new derived node and sets ptr to point to it, then calls parse on any child
@@ -75,8 +123,7 @@ num parse(Node * &ptr, string expression){
     return -1;
 }
 
-
-/*
+/* main method
  * 
  */
 int main(int argc, char** argv) {
