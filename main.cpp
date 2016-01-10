@@ -146,6 +146,8 @@ int main(int argc, char** argv) {
 LiteralNode::LiteralNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*Returns expression represented as a num type*/
