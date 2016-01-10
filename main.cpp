@@ -128,6 +128,7 @@ num parse(Node * &ptr, string expression){
 
 /* cleanup
  * Given a pointer to a node, frees that subtree.
+ * To free entire tree, call cleanup(root);
  */
 void cleanup(Node * ptr){
     // Given NULL?
