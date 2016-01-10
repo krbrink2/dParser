@@ -21,8 +21,6 @@ using namespace std;
  * Globals and class declarations
  * ================ */
 
-Node * root;
-
 // Represents a node on the expression tree.
 // Because node has a pure virtual function, it is an abstract class, and thus 
 // cannot have any instances. Only its children can be instantiated.
@@ -110,6 +108,8 @@ public:
     // inherited from parent class
     num evaluate();
 };
+
+Node * root;
 
 /* ================
  * Function definitions
