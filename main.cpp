@@ -40,7 +40,9 @@ public:
     
 protected:    
 // protected attributes can only be seen by their owner and its children
+    // string representing the mathematical expression for this node
     string expression;    
+    // Pointers to children nodes. NULL if child does not exist.
     Node* children[2]; 
     
 private:
