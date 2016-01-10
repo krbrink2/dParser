@@ -157,6 +157,9 @@ int main(int argc, char** argv) {
     LiteralNode* testNode = new LiteralNode("2.12345");
     cout << endl << parse(root, testNode->getExpression());
     
+    cleanup(testNode);
+    cleanup(root);
+    
     return 0;
 }
 
