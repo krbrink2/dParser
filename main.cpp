@@ -194,16 +194,15 @@ int findCloser(string s, int openerIndex)
             x = findCloser(s, x);
             /*-1 may have been returned if no closer was found. In this case,
                 also return -1.*/
-            if (x == 0)
+            if (x == -1)
             {
                 return -1;
             }
         }
-        
-        /*If no closer has been found by the end of the string, then the string
+    }
+    /*If no closer has been found by the end of the string, then the string
             is unbalanced. Return -1.*/
         return -1;
-    }
 }
 
 /* Given a node pointer and an expression, parse() determines the next
