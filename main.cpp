@@ -192,6 +192,7 @@ void Node::freeChildren(){
     delete children[1];
 }
 
+
 /* Constructor for LiteralNode. Defines expression. Both children are null since
     a Literal will never have any children.*/
 LiteralNode::LiteralNode(string exp)
@@ -205,4 +206,69 @@ LiteralNode::LiteralNode(string exp)
 num LiteralNode::evaluate()
 {
     return stringToNum(expression);
+}
+
+
+/*Constructor for AddNode. Defines expression.*/
+AddNode::AddNode(string exp)
+{
+    expression = exp;
+}
+
+/*AddNode evaluates by adding together its two children.*/
+num AddNode::evaluate()
+{
+    return children[0]->evaluate() + children[1]->evaluate();
+}
+
+
+/*Constructor for SubtractNode. Defines expression.*/
+SubtractNode::SubtractNode(string exp)
+{
+    expression = exp;
+}
+
+/*SubtractNode evaluates by subtracting the right child from the left child.*/
+num SubtractNode::evaluate()
+{
+    return children[0]->evaluate() - children[1]->evaluate();
+}
+
+
+/*Constructor for MultiplyNode. Defines expression.*/
+MultiplyNode::MultiplyNode(string exp)
+{
+    expression = exp;
+}
+
+/*MultiplyNode evaluates by multiplying its two children together.*/
+num MultiplyNode::evaluate()
+{
+    return children[0]->evaluate() * children[1]->evaluate();
+}
+
+
+/*Constructor for DivideNode. Defines expression.*/
+DivideNode::DivideNode(string exp)
+{
+    expression = exp;
+}
+
+/*DivideNode evaluates by dividing the left child by the right child.*/
+num DivideNode::evaluate()
+{
+    return children[0]->evaluate() / children[1]->evaluate();
+}
+
+
+/*Constructor for ParenNode. Defines expression.*/
+ParenNode::ParenNode(string exp)
+{
+    expression = exp;
+}
+
+/*ParenNode evaluates by evaluating its child.*/
+num ParenNode::evaluate()
+{
+    return children[0]->evaluate();
 }
