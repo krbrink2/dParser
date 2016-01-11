@@ -40,9 +40,6 @@ public:
     // Returns pointer to member array children. Will be double pointer.
     Node ** getChildren();
     
-    // frees children pointers
-    void freeChildren();
-    
 protected:    
 // protected attributes can only be seen by their owner and its children
     // string representing the mathematical expression for this node
@@ -146,8 +143,8 @@ void cleanup(Node * ptr){
     Node ** children = ptr->getChildren();
     cleanup(children[0]);
     cleanup(children[1]);
-    // Actually free children nodes
-    ptr->freeChildren();
+    // Actually free this node
+    delete ptr;
     
     return;
 }
@@ -179,17 +176,11 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-/*getChildren()
+/* getChildren()
  * Returns pointer to array of children pointers.
  */
 Node ** Node::getChildren(){
    return children; 
-}
-
-// ONLY deletes children of this node. NOT recursive.
-void Node::freeChildren(){
-    delete children[0];
-    delete children[1];
 }
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since
