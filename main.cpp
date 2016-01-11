@@ -110,6 +110,10 @@ Node * root;
  * Non-method function declarations
  * ================ */
 
+void error(string prompt);
+
+num parse(Node * &ptr, string expression);
+
 void cleanup(Node * ptr);
 
 /* ================
