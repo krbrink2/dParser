@@ -110,6 +110,15 @@ Node * root;
  * Non-method function definitions: not in a class
  * ================ */
 
+/* error()
+ * Called when an error is found in the program, and it can't complete.
+ * Cleans up dynamic memory, and kills execution with error status.
+ */
+void error(){
+    cout << "Could not evaluate expression!" << endl;
+    exit(EXIT_FAILURE);
+}
+
 /* Given a node pointer and an expression, parse() determines the next
  * operation to be performed and the substring(s) to perform it on. Allocates
  * a new derived node and sets ptr to point to it, then calls parse on any child
@@ -126,7 +135,10 @@ num parse(Node * &ptr, string expression){
     
     // First: check if expression starts with opening paren
     if(expression[0] == '('){
-        // If does not end with closing paren, found issue.
+        // Make sure ends with closing paren
+        if(expression[expression.size() - 1] != ')'){
+            error();
+        }
     }
 }
 
