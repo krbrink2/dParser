@@ -107,7 +107,7 @@ public:
 Node * root;
 
 /* ================
- * Function definitions
+ * Non-method function definitions: not in a class
  * ================ */
 
 /* Given a node pointer and an expression, parse() determines the next
@@ -174,6 +174,10 @@ int main(int argc, char** argv) {
     
     return 0;
 }
+
+/* ================
+ * Method definitions: functions in classes
+ * ================ */
 
 /* getChildren()
  * Returns pointer to array of children pointers.
