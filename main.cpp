@@ -40,9 +40,6 @@ public:
     // Returns pointer to member array children. Will be double pointer.
     Node ** getChildren();
     
-    // frees children pointers
-    void freeChildren();
-    
 protected:    
 // protected attributes can only be seen by their owner and its children
     // string representing the mathematical expression for this node
@@ -110,7 +107,7 @@ public:
 Node * root;
 
 /* ================
- * Function definitions
+ * Non-method function definitions: not in a class
  * ================ */
 
 /* Given a node pointer and an expression, parse() determines the next
@@ -146,9 +143,8 @@ void cleanup(Node * ptr){
     Node ** children = ptr->getChildren();
     cleanup(children[0]);
     cleanup(children[1]);
-    // Actually free children nodes
-    ptr->freeChildren();
-    
+    // Actually free this node
+    delete ptr;    
     return;
 }
 
@@ -179,17 +175,15 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-/*getChildren()
+/* ================
+ * Method definitions: functions in classes
+ * ================ */
+
+/* getChildren()
  * Returns pointer to array of children pointers.
  */
 Node ** Node::getChildren(){
    return children; 
-}
-
-// ONLY deletes children of this node. NOT recursive.
-void Node::freeChildren(){
-    delete children[0];
-    delete children[1];
 }
 
 
@@ -213,6 +207,8 @@ num LiteralNode::evaluate()
 AddNode::AddNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*AddNode evaluates by adding together its two children.*/
@@ -226,6 +222,8 @@ num AddNode::evaluate()
 SubtractNode::SubtractNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*SubtractNode evaluates by subtracting the right child from the left child.*/
@@ -239,6 +237,8 @@ num SubtractNode::evaluate()
 MultiplyNode::MultiplyNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*MultiplyNode evaluates by multiplying its two children together.*/
@@ -252,6 +252,8 @@ num MultiplyNode::evaluate()
 DivideNode::DivideNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*DivideNode evaluates by dividing the left child by the right child.*/
@@ -265,6 +267,8 @@ num DivideNode::evaluate()
 ParenNode::ParenNode(string exp)
 {
     expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;
 }
 
 /*ParenNode evaluates by evaluating its child.*/
