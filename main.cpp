@@ -105,6 +105,8 @@ public:
     num evaluate();
 };
 
+/*root will point to the root Node of the tree which will be constructed by
+    parse.*/
 Node * root;
 
 /* ================
@@ -117,7 +119,14 @@ Node * root;
  * pointers with their expression strings.
  */
 num parse(Node * &ptr, string expression){
-    //@TODO; implement
+    //@TODO; implement generalized parsing of expressions.
+    /*Idea: create function to find the first token (first Literal), 
+        second token (operation/parens), and third token (the rest of the
+        expression).*/
+    /*One token present -> Literal. Parenthesis found before an op +,-,*, or /
+        is found -> Mult (special case). Third token begins with (, {, or [ ->
+        Parens. Otherwise, handle the binary op normally*/
+    
     /*Assuming input belongs to a LiteralNode (FIX LATER):*/
     LiteralNode* nextNode = new LiteralNode(expression);
     ptr = nextNode;
@@ -150,12 +159,19 @@ void cleanup(Node * ptr){
 int main(int argc, char** argv) {
     cout << "You have entered main()" << endl;
     
+    /*Test function().*/
+    cout << endl << "function() test: " << endl;
     function();
+    
+    /*Test stringToNum.*/
+    cout << endl << "stringToNum test: " << endl;
     string strang = "2.2221111";
     cout << stringToNum(strang);
     
+    /*Test construction of LiteralNode.*/
+    cout << endl << "LiteralNode construction test: " << endl;
     LiteralNode* testNode = new LiteralNode("2.12345");
-    cout << endl << parse(root, testNode->getExpression());
+    cout << parse(root, testNode->getExpression());
     
     return 0;
 }
