@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <cctype>
 
 #include "dmath.h"
 
@@ -147,14 +148,26 @@ num parse(Node * &ptr, string expression){
      * Otherwise, handle the binary op normally.
      */
     
-    // First: check if expression starts with opening paren
+    // First: PARENNODE
+    // Check if expression starts with opening paren.
     if(expression[0] == '('){
         // Make sure ends with closing paren
-        if(expression[expression.size() - 1] != ')'){
+        if(expression.back() != ')'){
             error("Expression started with a parenthesis but didn't end with"
                     "one.");
         }
+        
+        // set this ptr to point to new ParenNode
+        ptr = new ParenNode(expression);
+        // Recursively parse expression contained within parentheses
+        Node ** children = ptr->getChildren();
+        parse(children[0], expression.substr(1, expression.size() - 2));
     }
+    /* If it does not start with '(', check if it does not start with a number*/
+    if(!isdigit(expression.front())){
+        error("Invalid expression: invalid beginning of subexpression");
+    }
+    // @RESUME
 }
 
 /* cleanup
