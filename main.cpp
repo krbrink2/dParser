@@ -110,6 +110,15 @@ Node * root;
  * Non-method function definitions: not in a class
  * ================ */
 
+/* error()
+ * Called when an error is found in the program, and it can't complete.
+ * Cleans up dynamic memory, and kills execution with error status.
+ */
+void error(){
+    cout << "Could not evaluate expression!" << endl;
+    exit(EXIT_FAILURE);
+}
+
 /* Given a node pointer and an expression, parse() determines the next
  * operation to be performed and the substring(s) to perform it on. Allocates
  * a new derived node and sets ptr to point to it, then calls parse on any child
@@ -124,10 +133,13 @@ num parse(Node * &ptr, string expression){
         is found -> Mult (special case). Third token begins with (, {, or [ ->
         Parens. Otherwise, handle the binary op normally*/
     
-    /*Assuming input belongs to a LiteralNode (FIX LATER):*/
-    LiteralNode* nextNode = new LiteralNode(expression);
-    ptr = nextNode;
-    return ptr->evaluate();
+    // First: check if expression starts with opening paren
+    if(expression[0] == '('){
+        // Make sure ends with closing paren
+        if(expression[expression.size() - 1] != ')'){
+            error();
+        }
+    }
 }
 
 /* cleanup
@@ -155,21 +167,11 @@ void cleanup(Node * ptr){
 int main(int argc, char** argv) {
     cout << "You have entered main()" << endl;
     
-    /*Test function().*/
-    cout << endl << "function() test: " << endl;
-    function();
-    
-    /*Test stringToNum.*/
-    cout << endl << "stringToNum test: " << endl;
-    string strang = "2.2221111";
-    cout << stringToNum(strang);
-    
-    /*Test construction of LiteralNode.*/
-    cout << endl << "LiteralNode construction test: " << endl;
-    LiteralNode* testNode = new LiteralNode("2.12345");
-    cout << parse(root, testNode->getExpression());
-    
-    cleanup(testNode);
+    // argc is 1 + number of program arguments
+    // argv contains program name, followed by arguments
+    // @TODO: check for number of arguments
+    parse(root, argv[1]);
+    root->evaluate();
     cleanup(root);
     
     return 0;
