@@ -118,6 +118,14 @@ void error(){
     cout << "Could not evaluate expression!" << endl;
     exit(EXIT_FAILURE);
 }
+/* This overloaded version of error allows for a custom prompt to be printed to
+ * give the user more useful feedback.
+ */
+void error(string prompt)
+{
+    cout << prompt << endl;
+    exit(EXIT_FAILURE);
+}
 
 /* Given a node pointer and an expression, parse() determines the next
  * operation to be performed and the substring(s) to perform it on. Allocates
@@ -126,18 +134,22 @@ void error(){
  */
 num parse(Node * &ptr, string expression){
     //@TODO; implement generalized parsing of expressions.
-    /*Idea: create function to find the first token (first Literal), 
-        second token (operation/parens), and third token (the rest of the
-        expression).*/
-    /*One token present -> Literal. Parenthesis found before an op +,-,*, or /
-        is found -> Mult (special case). Third token begins with (, {, or [ ->
-        Parens. Otherwise, handle the binary op normally*/
+    /* Idea: create function to find the first token (first Literal/Paren), 
+     * second token (operation/parens), and third token (the rest of the
+     * expression).
+     */
+    /* One token present -> Literal/Paren. 
+     * Parenthesis found before an op +,-,*,or / is found -> Mult (special case)
+     * Third token begins with (, {, or [ -> Parens. 
+     * Otherwise, handle the binary op normally.
+     */
     
     // First: check if expression starts with opening paren
     if(expression[0] == '('){
         // Make sure ends with closing paren
         if(expression[expression.size() - 1] != ')'){
-            error();
+            error("Expression started with a parenthesis but didn't end with"
+                    "one.");
         }
     }
 }
@@ -190,7 +202,8 @@ Node ** Node::getChildren(){
 
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since
-    a Literal will never have any children.*/
+ a Literal will never have any children.
+ */
 LiteralNode::LiteralNode(string exp)
 {
     expression = exp;
