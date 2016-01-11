@@ -144,8 +144,7 @@ void cleanup(Node * ptr){
     cleanup(children[0]);
     cleanup(children[1]);
     // Actually free this node
-    delete ptr;
-    
+    delete ptr;    
     return;
 }
 
@@ -183,6 +182,38 @@ Node ** Node::getChildren(){
    return children; 
 }
 
+/* AddNode constructor
+ */
+AddNode::AddNode(string exp){
+    expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;    
+}
+
+/* AddNode::evaluate()
+ * Returns num represented by this node
+ */
+num AddNode::evaluate(){
+    //@TODO: implement
+    return -1;
+}
+
+/* DivideNode constructor
+ */
+DivideNode::DivideNode(string exp){
+    expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;    
+}
+
+/* DivideNode::evaluate()
+ * Returns num represented by this node
+ */
+num DivideNode::evaluate(){
+    //@TODO: implement
+    return -1;
+}
+
 /* Constructor for LiteralNode. Defines expression. Both children are null since
     a Literal will never have any children.*/
 LiteralNode::LiteralNode(string exp)
@@ -197,3 +228,52 @@ num LiteralNode::evaluate()
 {
     return stringToNum(expression);
 }
+
+/* MultiplyNode constructor
+ */
+MultiplyNode::MultiplyNode(string exp){
+    expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;    
+}
+
+/* MultiplyNode::evaluate()
+ * Returns num represented by this node
+ */
+num MultiplyNode::evaluate(){
+    //@TODO: implement
+    return -1;
+}
+
+/* ParenNode constructor
+ */
+ParenNode::ParenNode(string exp){
+    expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;    
+}
+
+/* ParenNode::evaluate()
+ * Returns num represented by this node
+ */
+num ParenNode::evaluate(){
+    //@TODO: implement
+    return -1;
+}
+
+/* SubtractNode constructor
+ */
+SubtractNode::SubtractNode(string exp){
+    expression = exp;
+    children[0] = NULL;
+    children[1] = NULL;    
+}
+
+/* SubtractNode::evaluate()
+ * Returns num represented by this node
+ */
+num SubtractNode::evaluate(){
+    //@TODO: implement
+    return -1;
+}
+
