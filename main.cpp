@@ -117,6 +117,8 @@ num parse(Node * &ptr, string expression);
 
 void cleanup(Node * ptr);
 
+int findCloser(string s, int openerIndex);
+
 /* ================
  * Non-method function definitions: not in a class
  * ================ */
@@ -129,6 +131,79 @@ void error(string prompt)
     cout << prompt << endl;
     cleanup(root);
     exit(EXIT_FAILURE);
+}
+
+/* getCloser returns the closing parenthesis corresponding to the given opening
+ * parenthesis. ( -> ), { -> }, [ -> ]. If no proper opener was given, then
+ * NULL is returned.
+ */
+char getCloser(char opener)
+{
+    if (opener == '(')
+    {
+        return ')';
+    }
+    if (opener == '{')
+    {
+        return '}';
+    }
+    if (opener == '[')
+    {
+        return ']';
+    }
+    
+    return NULL;
+}
+
+/* isOpener returns whether or not the input char is an opening parenthesis 
+ * or not.
+ */
+bool isOpener(char c)
+{
+    if (c == '(' || c == '{' || c == '[')
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+/* findCloser returns the location in the string s of the closing parenthesis
+ * that balances the opening parenthesis at openerIndex. Openers: (, {, and [.
+ * Closers: ), }, and ]. If no correct closing parenthesis is found, -1 is
+ * returned.
+ */
+int findCloser(string s, int openerIndex)
+{
+    /*Define the target char (the closing parenthesis we're looking for).*/
+    char target = getCloser(s[openerIndex]);
+    /*Search across s for the appropriate closing parenthesis.*/
+    for (int x = openerIndex + 1; x < s.length(); x++)
+    {
+        /*If the current char matches the target char, then the closer has been
+            found. Return x.*/
+        if (s[x] == target)
+        {
+            return x;
+        }
+        /*If the current char is another opening parenthesis, then we must
+            traverse that opener/closer pair to avoid eliminate it from the
+            possible solutions.*/
+        if (isOpener(s[x]))
+        {
+            x = findCloser(s, x);
+            /*-1 may have been returned if no closer was found. In this case,
+                also return -1.*/
+            if (x == 0)
+            {
+                return -1;
+            }
+        }
+        
+        /*If no closer has been found by the end of the string, then the string
+            is unbalanced. Return -1.*/
+        return -1;
+    }
 }
 
 /* Given a node pointer and an expression, parse() determines the next
@@ -149,7 +224,7 @@ num parse(Node * &ptr, string expression){
      */
     
     // First: PARENNODE
-    // Check if expression starts with opening paren.
+    // Check if expression tarts with opening paren.
     if(expression[0] == '('){
         // Make sure ends with closing paren
         if(expression.back() != ')'){
