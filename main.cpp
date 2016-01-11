@@ -117,6 +117,10 @@ num parse(Node * &ptr, string expression);
 
 void cleanup(Node * ptr);
 
+char getCloser(char opener);
+
+bool isOpener(char c);
+
 int findCloser(string s, int openerIndex);
 
 /* ================
