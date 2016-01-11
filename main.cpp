@@ -107,23 +107,22 @@ public:
 Node * root;
 
 /* ================
+ * Non-method function declarations
+ * ================ */
+
+void cleanup(Node * ptr);
+
+/* ================
  * Non-method function definitions: not in a class
  * ================ */
 
-/* error()
- * Called when an error is found in the program, and it can't complete.
- * Cleans up dynamic memory, and kills execution with error status.
- */
-void error(){
-    cout << "Could not evaluate expression!" << endl;
-    exit(EXIT_FAILURE);
-}
-/* This overloaded version of error allows for a custom prompt to be printed to
+/* Allows for a custom prompt to be printed to
  * give the user more useful feedback.
  */
 void error(string prompt)
 {
     cout << prompt << endl;
+    cleanup(root);
     exit(EXIT_FAILURE);
 }
 
@@ -199,7 +198,6 @@ int main(int argc, char** argv) {
 Node ** Node::getChildren(){
    return children; 
 }
-
 
 /* Constructor for LiteralNode. Defines expression. Both children are null since
  a Literal will never have any children.
