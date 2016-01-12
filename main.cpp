@@ -156,7 +156,7 @@ char getCloser(char opener)
         return ']';
     }
     
-    return NULL;
+    return (char)NULL;
 }
 
 /* isOpener returns whether or not the input char is an opening parenthesis 
@@ -226,26 +226,41 @@ num parse(Node * &ptr, string expression){
      * Otherwise, handle the binary op normally.
      */
     
-    // First: PARENNODE
-    // Check if expression tarts with opening paren.
-    if(expression[0] == '('){
-        // Make sure ends with closing paren
-        if(expression.back() != ')'){
-            error("Expression started with a parenthesis but didn't end with"
-                    "one.");
-        }
-        
-        // set this ptr to point to new ParenNode
-        ptr = new ParenNode(expression);
-        // Recursively parse expression contained within parentheses
-        Node ** children = ptr->getChildren();
-        parse(children[0], expression.substr(1, expression.size() - 2));
+    // Sanity check
+    if(expression.empty()){
+        error("Error: parse(...) passed empty string!");
     }
-    /* If it does not start with '(', check if it does not start with a number*/
-    if(!isdigit(expression.front())){
-        error("Invalid expression: invalid beginning of subexpression");
-    }
-    // @RESUME
+    
+    //!!! This is all wrong. Needs overhaul.
+    //@TODO: overhaul
+    
+//    // First: PARENNODE
+//    // Check if expression tarts with opening paren.
+//    if(isOpener(expression.front())){
+//        // @TODO: parse paren
+//        
+//        // set this ptr to point to new ParenNode
+//        ptr = new ParenNode(expression);
+//        // Recursively parse expression contained within parentheses
+//        Node ** children = ptr->getChildren();
+//        parse(children[0], expression.substr(1, expression.size() - 2));
+//    }
+//    /* If it does not start with '(', check if it does not start with a number*/
+//    // This is currently assuming we are not
+//    //  accepting functions or numeric constants.
+//    if(!isdigit(expression.front())){
+//        error("Invalid expression: invalid beginning of subexpression");
+//    }
+//    // By this point, expression must start with a numeric literal.
+//    int index;
+//    // Find next non-digit char.
+//    for(index = 1; expression[index] != '\0'; index++){
+//        if(!isdigit(expression.front())){
+//            
+//        }
+//    }
+    
+    return -1;
 }
 
 /* cleanup
@@ -276,6 +291,8 @@ int main(int argc, char** argv) {
     // argc is 1 + number of program arguments
     // argv contains program name, followed by arguments
     // @TODO: check for number of arguments
+    
+    // Idea: may want to strip expression of spaces before parsing
     parse(root, argv[1]);
     root->evaluate();
     cleanup(root);
