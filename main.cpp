@@ -187,12 +187,16 @@ bool isCloser(char c)
 /* findCloser returns the location in the string s of the closing parenthesis
  * that balances the opening parenthesis at openerIndex. Openers: (, {, and [.
  * Closers: ), }, and ]. If no correct closing parenthesis is found, -1 is
- * returned.
+ * returned. If a non-opener char was given, -2 is returned.
  */
 int findCloser(string s, int openerIndex)
 {
     /*Define the target char (the closing parenthesis we're looking for).*/
     char target = getCloser(s[openerIndex]);
+    if (target == NULL)
+    {
+        return -2;
+    }
     /*Search across s for the appropriate closing parenthesis.*/
     for (int x = openerIndex + 1; x < s.length(); x++)
     {
@@ -354,6 +358,22 @@ int main(int argc, char** argv) {
     parse(root, argv[1]);
     root->evaluate();
     cleanup(root);
+    
+    /* Tests for findCloser:
+     * Test 1 - Test if findCloser returns -2 when given a non-opener char.
+     * Test 2 - Test if findCloser returns -1 for an unbalanced string.
+     * Test 3 - Test if findCloser returns the location of the closer given its
+     * corresponding opener in a balanced string.
+     */
+        //Test 1: Should return -2.
+    string testString = "abc(def";
+    cout << endl << "Test 1: " << findCloser(testString, 0);
+        //Test 2: should return -1.
+    cout << endl << "Test 2: " << findCloser(testString, 3);
+        //Test 3: should return 7.
+    testString += ")ghi";
+    cout << endl << "Test 3: " << findCloser(testString, 3);
+    
     
     return 0;
 }
