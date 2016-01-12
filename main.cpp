@@ -256,36 +256,7 @@ int parse(Node * &ptr, string expression){
     if( !isdigit(expression.back()) && !isCloser(expression.back()) ){
         error("Error in parse(...): invalid ending character");
     }
-    
-    //!!! This is all wrong. Needs overhaul.
-    //@TODO: overhaul
-    
-//    // First: PARENNODE
-//    // Check if expression tarts with opening paren.
-//    if(isOpener(expression.front())){
-//        // @TODO: parse paren
-//        
-//        // set this ptr to point to new ParenNode
-//        ptr = new ParenNode(expression);
-//        // Recursively parse expression contained within parentheses
-//        Node ** children = ptr->getChildren();
-//        parse(children[0], expression.substr(1, expression.size() - 2));
-//    }
-//    /* If it does not start with '(', check if it does not start with a number*/
-//    // This is currently assuming we are not
-//    //  accepting functions or numeric constants.
-//    if(!isdigit(expression.front())){
-//        error("Invalid expression: invalid beginning of subexpression");
-//    }
-//    // By this point, expression must start with a numeric literal.
-//    int index;
-//    // Find next non-digit char.
-//    for(index = 1; expression[index] != '\0'; index++){
-//        if(!isdigit(expression.front())){
-//            
-//        }
-//    }
-    
+        
     // First, look for +, - outside parens.
     int i;
     for(i = 0; i < expression.length(); i++){
@@ -303,10 +274,10 @@ int parse(Node * &ptr, string expression){
         // Addition
         if(curChar == '+'){
             ptr = new AddNode(expression);
-            Node ** children= ptr->getChildren();
+            Node ** children = ptr->getChildren();
             // This should account for erroneous first/last '+'.
             parse(children[0], expression.substr(0,i));
-            parse(children[1], expression.substr(i+1, expression.length() - 1));
+            parse(children[1], expression.substr(i+1, expression.length() - (i + 1)));
             return 0;
         }
         // Subtraction
@@ -315,14 +286,106 @@ int parse(Node * &ptr, string expression){
             Node ** children= ptr->getChildren();
             // This should account for erroneous first/last '-'.
             parse(children[0], expression.substr(0,i));
-            parse(children[1], expression.substr(i+1, expression.length() - 1));
+            parse(children[1], expression.substr(i+1, expression.length() - (i + 1)));
             return 0;
         }
     }
-    // No +, -. Look for * or / operators.
+    // No +, - found. Look for * or / operators.
+    for(i = 0; i < expression.length(); i++){
+        char curChar = expression[i];
+        
+        // skip parentheses
+        if(isOpener(curChar)){
+            i = findCloser(expression, i);
+            if(i < 0){
+                error("Error: unbalanced parentheses!");
+            }
+            continue;
+        }
+        
+        // Multiplication, via '*' operator
+        if(curChar == '*'){
+            ptr = new MultiplyNode(expression);
+            Node ** children = ptr->getChildren();
+            // This should account for erroneous first/last '*'.
+            parse(children[0], expression.substr(0,i));
+            parse(children[1], expression.substr(i+1, expression.length() - (i + 1)));
+            return 0;
+        }
+        // Division
+        if(curChar == '/'){
+            ptr = new DivideNode(expression);
+            Node ** children= ptr->getChildren();
+            // This should account for erroneous first/last '/'.
+            parse(children[0], expression.substr(0,i));
+            parse(children[1], expression.substr(i+1, expression.length() - (i + 1)));
+            return 0;
+        }
+    }
+    // No *, / found. Look for literal-paren adjacency multiplicaiton,
+    //  such as (5 + 8)14
+    for(i = 0; i < expression.length(); i++){
+        char curChar = expression[i];
+        
+        // skip parentheses
+        if(isOpener(curChar)){
+            i = findCloser(expression, i);
+            if(i < 0){
+                error("Error: unbalanced parentheses!");
+            }
+            continue;
+        }
+        
+        // if curChar is nota digit, continue
+        if(!isdigit(curChar)){
+            continue;
+        }
+        
+        // curChar is a digit:
+        //  See if it is adjacent to a paren
+        // Check if curChar trails a parentheses pair
+        // But NOT at the begining
+        if(i == 0){
+            continue;
+        }
+        if(isCloser(expression[i - 1])){
+            ptr = new MultiplyNode(expression);
+            Node ** children = ptr->getChildren();
+            parse(children[0], expression.substr(0, i));
+            parse(children[1], expression.substr(i, expression.length() - i));
+            return 0;
+        }
+        // Check if curChar leads a parentheses pair
+        // But NOT at the end
+        if(i == expression.length() - 1){
+            continue;
+        }
+        if(isOpener(expression[i + 1])){
+            ptr = new MultiplyNode(expression);
+            Node ** children = ptr->getChildren();
+            parse(children[0], expression.substr(0, i + 1));
+            parse(children[1], expression.substr(i+1, expression.length()-(i+1)));
+            return 0;
+        }
+    }
+        
+    // No literal-adjacency multiplication.
+    // Must be full-paren wrapped expression.
+    // Make sure it is.
+    if(!isOpener(expression.front()) || !isCloser(expression.back())){
+        // Something went wrong with parsing
+        error("Parsing error: algorithm did not determine statement type!");
+        return -1;
+    }
+    else{
+        // Statement must be wrapped in parentheses
+        ptr = new ParenNode(expression);
+        Node ** children = ptr->getChildren();
+        parse(children[0], expression.substr(1, expression.length() - 2));
+        return 0;
+    }
     
-    
-    return -1;
+    return -1;      // unreachable line
 }
 
 /* cleanup
