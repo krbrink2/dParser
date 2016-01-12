@@ -193,7 +193,7 @@ int findCloser(string s, int openerIndex)
 {
     /*Define the target char (the closing parenthesis we're looking for).*/
     char target = getCloser(s[openerIndex]);
-    if (target == NULL)
+    if (target == (char)NULL)
     {
         return -2;
     }
@@ -353,6 +353,10 @@ int main(int argc, char** argv) {
     // argc is 1 + number of program arguments
     // argv contains program name, followed by arguments
     // @TODO: check for number of arguments
+    if(argc < 2){
+        cout << "Usage: ./dparser {expression}" << endl;
+        return 0;
+    }        
     
     // Idea: may want to strip expression of spaces before parsing
     parse(root, argv[1]);
