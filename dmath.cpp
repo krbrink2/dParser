@@ -10,14 +10,33 @@
 
 using namespace std;
 
-void function(){
-    cout << "This is in function()!" << endl;
-    cout << "I added this line!" << endl;
-}
-
 num stringToNum(string s)
 {    
     return strtod(s.c_str(), NULL);
+}
+
+/* pow returns x^n using the exponentiation by squaring method.
+ */
+double pow(double x, int n)
+{
+    if (n == 0)
+    {
+        return 1;
+    }
+    if (n == 1)
+    {
+        return x;
+    }
+    if (n < 0)
+    {
+        return pow(1 / x, n * -1);
+    }
+    if (n % 2 == 0)
+    {
+        return pow(x * x, n / 2);
+    }
+    
+    return x * pow(x * x, (n - 1) / 2);
 }
 
 /* sqrt estimates the square root of N using the Babylonian algorithm for
