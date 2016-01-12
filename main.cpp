@@ -113,13 +113,15 @@ Node * root;
 
 void error(string prompt);
 
-num parse(Node * &ptr, string expression);
+int parse(Node * &ptr, string expression);
 
 void cleanup(Node * ptr);
 
 char getCloser(char opener);
 
 bool isOpener(char c);
+
+bool isCloser(char c);
 
 int findCloser(string s, int openerIndex);
 
@@ -172,6 +174,16 @@ bool isOpener(char c)
     return false;
 }
 
+bool isCloser(char c)
+{
+    if (c == ')' || c == '{' || c == ']')
+    {
+        return true;
+    }
+    
+    return false;    
+}
+
 /* findCloser returns the location in the string s of the closing parenthesis
  * that balances the opening parenthesis at openerIndex. Openers: (, {, and [.
  * Closers: ), }, and ]. If no correct closing parenthesis is found, -1 is
@@ -213,8 +225,9 @@ int findCloser(string s, int openerIndex)
  * operation to be performed and the substring(s) to perform it on. Allocates
  * a new derived node and sets ptr to point to it, then calls parse on any child
  * pointers with their expression strings.
+ * Returns 0 on success.
  */
-num parse(Node * &ptr, string expression){
+int parse(Node * &ptr, string expression){
     //@TODO; implement generalized parsing of expressions.
     /* Idea: create function to find the first token (first Literal/Paren), 
      * second token (operation/parens), and third token (the rest of the
@@ -226,9 +239,18 @@ num parse(Node * &ptr, string expression){
      * Otherwise, handle the binary op normally.
      */
     
-    // Sanity check
+    // Sanity checks
+    // Empty string
     if(expression.empty()){
         error("Error: parse(...) passed empty string!");
+    }
+    // If does NOT open with opening paren, nor literal
+    if( !isdigit(expression.front()) && !isOpener(expression.front()) ){
+        error("Error in parse(...): invalid opening character");
+    }
+    // IF does NOT end with closing paren, nor literal
+    if( !isdigit(expression.back()) && !isCloser(expression.back()) ){
+        error("Error in parse(...): invalid ending character");
     }
     
     //!!! This is all wrong. Needs overhaul.
@@ -259,6 +281,42 @@ num parse(Node * &ptr, string expression){
 //            
 //        }
 //    }
+    
+    // First, look for +, - outside parens.
+    int i;
+    for(i = 0; i < expression.length(); i++){
+        char curChar = expression[i];
+        
+        // skip parentheses
+        if(isOpener(curChar)){
+            i = findCloser(expression, i);
+            if(i < 0){
+                error("Error: unbalanced parentheses!");
+            }
+            continue;
+        }
+        
+        // Addition
+        if(curChar == '+'){
+            ptr = new AddNode(expression);
+            Node ** children= ptr->getChildren();
+            // This should account for erroneous first/last '+'.
+            parse(children[0], expression.substr(0,i));
+            parse(children[1], expression.substr(i+1, expression.length() - 1));
+            return 0;
+        }
+        // Subtraction
+        if(curChar == '-'){
+            ptr = new SubtractNode(expression);
+            Node ** children= ptr->getChildren();
+            // This should account for erroneous first/last '-'.
+            parse(children[0], expression.substr(0,i));
+            parse(children[1], expression.substr(i+1, expression.length() - 1));
+            return 0;
+        }
+    }
+    // No +, -. Look for * or / operators.
+    
     
     return -1;
 }
