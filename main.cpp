@@ -354,11 +354,6 @@ int main(int argc, char** argv) {
     // argv contains program name, followed by arguments
     // @TODO: check for number of arguments
     
-    // Idea: may want to strip expression of spaces before parsing
-    parse(root, argv[1]);
-    root->evaluate();
-    cleanup(root);
-    
     /* Tests for findCloser:
      * Test 1 - Test if findCloser returns -2 when given a non-opener char.
      * Test 2 - Test if findCloser returns -1 for an unbalanced string.
@@ -372,7 +367,12 @@ int main(int argc, char** argv) {
     cout << endl << "Test 2: " << findCloser(testString, 3);
         //Test 3: should return 7.
     testString += ")ghi";
-    cout << endl << "Test 3: " << findCloser(testString, 3);
+    cout << endl << "Test 3: " << findCloser(testString, 3);  
+    
+    // Idea: may want to strip expression of spaces before parsing
+    parse(root, argv[1]);
+    root->evaluate();
+    cleanup(root);
     
     
     return 0;
