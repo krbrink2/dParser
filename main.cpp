@@ -176,7 +176,7 @@ bool isOpener(char c)
 
 bool isCloser(char c)
 {
-    if (c == ')' || c == '{' || c == ']')
+    if (c == ')' || c == '}' || c == ']')
     {
         return true;
     }
