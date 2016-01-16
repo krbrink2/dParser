@@ -416,6 +416,7 @@ int main(int argc, char** argv) {
     // argc is 1 + number of program arguments
     // argv contains program name, followed by arguments
     // @TODO: check for number of arguments
+    cout << "argc: " << argc << endl;
     if(argc < 2){
         cout << "Usage: ./dparser {expression}" << endl;
         return 0;
