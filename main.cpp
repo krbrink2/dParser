@@ -421,17 +421,22 @@ int main(int argc, char** argv) {
     // argv contains program name, followed by arguments
     // @TODO: check for number of arguments
     cout << "argc: " << argc << endl;
+    for(int i = 0; i < argc; i++){
+        cout << "argv[" << i << "]: " << argv[i] << endl;
+    }
     if(argc < 2){
         cout << "Usage: ./dparser {expression}" << endl;
-        return 0;
+        //return 0;
     }        
     
     /* Tests for parse:
      * Test 1 - 
      */ 
     
+    #define STRING "10+(40(12)(345+2345*21345*2345+23)6)" // Replace this to test
+    cout << STRING << endl;
     // Idea: may want to strip expression of spaces before parsing
-    cout << endl << "Parse command line test result: " << parse(root, argv[1]);
+    cout << endl << "Parse command line test result: " << parse(root, STRING);
     cout << endl << "Root evaluation test result: " << root->evaluate();
     cleanup(root);
     
