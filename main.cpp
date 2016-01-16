@@ -134,7 +134,7 @@ int findCloser(string s, int openerIndex);
  */
 void error(string prompt)
 {
-    cout << prompt << endl;
+    cout << endl << prompt << endl;
     cleanup(root);
     exit(EXIT_FAILURE);
 }
@@ -277,7 +277,7 @@ int parse(Node * &ptr, string expression){
             Node ** children = ptr->getChildren();
             // This should account for erroneous first/last '+'.
             parse(children[0], expression.substr(0,i));
-            parse(children[1], expression.substr(i+1, expression.length() - (i + 1)));
+            parse(children[1], expression.substr(i+1, string::npos));
             return 0;
         }
         // Subtraction
@@ -322,7 +322,7 @@ int parse(Node * &ptr, string expression){
             return 0;
         }
     }
-    // No *, / found. Look for literal-paren adjacency multiplicaiton,
+    // No *, / found. Look for literal-paren adjacency multiplication,
     //  such as (5 + 8)14
     for(i = 0; i < expression.length(); i++){
         char curChar = expression[i];
@@ -370,12 +370,16 @@ int parse(Node * &ptr, string expression){
     }
         
     // No literal-adjacency multiplication.
-    // Must be full-paren wrapped expression.
-    // Make sure it is.
+    // Must be full-paren wrapped expression OR just a literal.
+    // Check for paren wrapped expression first.
     if(!isOpener(expression.front()) || !isCloser(expression.back())){
-        // Something went wrong with parsing
-        error("Parsing error: algorithm did not determine statement type!");
-        return -1;
+        // If not wrapped in parentheses, then it must be a literal.
+        ptr = new LiteralNode(expression);
+        Node ** children = ptr->getChildren();
+        /* LiteralNodes have no children, so parse doesn't need to be called
+         * on them.
+         */
+        return 0;
     }
     else{
         // Statement must be wrapped in parentheses
@@ -422,24 +426,13 @@ int main(int argc, char** argv) {
         return 0;
     }        
     
-    /* Tests for findCloser:
-     * Test 1 - Test if findCloser returns -2 when given a non-opener char.
-     * Test 2 - Test if findCloser returns -1 for an unbalanced string.
-     * Test 3 - Test if findCloser returns the location of the closer given its
-     * corresponding opener in a balanced string.
-     */
-        //Test 1: Should return -2.
-    string testString = "abc(def";
-    cout << endl << "Test 1: " << findCloser(testString, 0);
-        //Test 2: should return -1.
-    cout << endl << "Test 2: " << findCloser(testString, 3);
-        //Test 3: should return 7.
-    testString += ")ghi";
-    cout << endl << "Test 3: " << findCloser(testString, 3);  
+    /* Tests for parse:
+     * Test 1 - 
+     */ 
     
     // Idea: may want to strip expression of spaces before parsing
-    parse(root, argv[1]);
-    root->evaluate();
+    cout << endl << "Parse command line test result: " << parse(root, argv[1]);
+    cout << endl << "Root evaluation test result: " << root->evaluate();
     cleanup(root);
     
     
@@ -470,6 +463,9 @@ LiteralNode::LiteralNode(string exp)
 /*Returns expression represented as a num type*/
 num LiteralNode::evaluate()
 {
+    /*@TODO: Add code for stringToNum (AKA strtod) failing to convert a string
+     * with invalid characters such as letters.
+     */
     return stringToNum(expression);
 }
 
